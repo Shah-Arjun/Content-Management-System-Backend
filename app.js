@@ -13,7 +13,7 @@ app.get('/', (req,res) => {
     res.json({
         status: 200,
         message: "Success, home api made easily"
-    })
+    }) 
 })
 
 

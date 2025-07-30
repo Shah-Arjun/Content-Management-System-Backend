@@ -17,7 +17,7 @@ app.get('/', (req,res) => {
 })
 
 
-
+//start server
 app.listen(5000 ,() => {
     console.log("Server / NodeJs is running at port 5000")
 })

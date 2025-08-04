@@ -5,6 +5,7 @@ const blogSchema = new mongoose.Schema({      // blogSchema collection / table n
     title : {                                // column 1
         type : String,
         required : true,
+        unique: true,
     },
     subTitle : {                             // column 2
         type : String,

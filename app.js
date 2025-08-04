@@ -46,7 +46,7 @@ app.get("/blogs", async (req, res) => {
 
 
 
-// GER API - /blogs/:id   (to fetch/get single blog by id)
+// GET  API - /blogs/:id   (to fetch/get single blog by id)
 app.get("/blogs/:id", async (req, res) => {
 
 const id = req.params.id                     // req.params is an object containing route parameters defined in the URL (using : syntax).
@@ -72,7 +72,7 @@ else {
     data : blog,
   })
 }
-}
+})
 
 
 

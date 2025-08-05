@@ -6,6 +6,11 @@ const app = express();
 
 
 
+//set ejs,   telling express to use ejs
+//renders the pages dyanamically based on server-side data
+app.set('views engine', 'ejs');
+
+
 //middleware
 //help your server understand the data being sent from the client (like a frontend form or a React app).
 app.use(express.json())                           // This allows your Express server to parse incoming JSON data in req.body.
@@ -20,10 +25,7 @@ connectDatabase();
 
 // GET API --> /
 app.get("/", (req, res) => {
-  res.json({
-    status: 200,
-    message: "Success, made home api",
-  });
+  res.render('home.ejs', {name:'Arjun'})          //render home.ejs with data {name:'Arjun'},   set the value of name in home.ejs as Arjun
 });
 
 

@@ -52,30 +52,36 @@ app.get("/blogs", async (req, res) => {
 
 // GET  API - /blogs/:id   (to fetch/get single blog by id)
 app.get("/blogs/:id", async (req, res) => {
-
-const id = req.params.id                     // req.params is an object containing route parameters defined in the URL (using : syntax).
-//or
-// const {id} = req.params.id
-
-//const blog = await Blog.find({_id:id})          //request gareko id lai db ko _id saga  match garne
-
-if(blogs.length == 0){
-  res.json({
-    status : 404,
-    message: "No blogs found with the id  id"
-  })
-}
-else {
+  const id = req.params.id; // req.params is an object containing route parameters defined in the URL (using : syntax).
   //or
-  const blog = await Blog.findById(id)
+  // const {id} = req.params.id
 
-  res.status(200).json({
-    //status : 200,
-    message : "found blog by id",
-    data : blog,
-  })
-}
-})
+  //const blog = await Blog.find({ _id:id }); //request gareko id lai db ko _id saga  match garne
+  // if (blog.length == 0) {
+  //   res.json({
+  //     status: 404,
+  //     message: "No blogs found with the id  id",
+  //   });
+  // } else {
+  //   res.status(200).json({
+  //     message: "found blog by id",
+  //     data: blog,
+  //   });
+  // }
+
+  const blog = await Blog.findById(id)
+  if(!blog){
+    res.status(200).json({
+      message: "Blog found"
+    })
+  } else {
+    res.status(400).json({
+      message: "Blog not found",
+      data: blog,
+    })
+  }
+
+});
 
 
 

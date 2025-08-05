@@ -5,14 +5,17 @@ const express = require("express");
 const app = express();
 
 
+
 //middleware
 //help your server understand the data being sent from the client (like a frontend form or a React app).
 app.use(express.json())                           // This allows your Express server to parse incoming JSON data in req.body.
 app.use(express.urlencoded({extended:true}))      // extended: true means it can parse nested objects
 
 
-//Database Connection function call
+
+//Database Connection function call (function is defined in database.js)
 connectDatabase();
+
 
 
 // GET API --> /
@@ -22,6 +25,7 @@ app.get("/", (req, res) => {
     message: "Success, made home api",
   });
 });
+
 
 
 
@@ -64,7 +68,6 @@ if(blogs.length == 0){
 else {
   //or
   // const blog = await Blog.findById(id)
-
 
   res.status(200).json({
     //status : 200,

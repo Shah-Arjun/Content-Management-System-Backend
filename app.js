@@ -22,11 +22,24 @@ app.use(express.urlencoded({extended:true}))      // extended: true means it can
 connectDatabase();
 
 
+// hey server, malai public folder to kura haru access garn de (asking permission for access to public folder)
+app.use(express.static("public"))
 
-// GET API --> /
+
+
+
+
+
+// GET API --> /     ,render home.ejs
 app.get("/", (req, res) => {
   res.render('home.ejs', {name:'Arjun'})          //render home.ejs with data {name:'Arjun'},   set the value of name in home.ejs as Arjun
 });
+
+
+//render about.ejs
+app.get('/about', (req, res) => {
+  res.render('about.ejs')
+})
 
 
 

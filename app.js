@@ -54,11 +54,11 @@ app.get("/blogs", async (req, res) => {
 app.get("/blogs/:id", async (req, res) => {
 
 const id = req.params.id                     // req.params is an object containing route parameters defined in the URL (using : syntax).
-
 //or
 // const {id} = req.params.id
 
-const blog = await Blog.find({_id:id})          //request gareko id lai db ko _id saga  match garne
+//const blog = await Blog.find({_id:id})          //request gareko id lai db ko _id saga  match garne
+
 if(blogs.length == 0){
   res.json({
     status : 404,
@@ -67,7 +67,7 @@ if(blogs.length == 0){
 }
 else {
   //or
-  // const blog = await Blog.findById(id)
+  const blog = await Blog.findById(id)
 
   res.status(200).json({
     //status : 200,

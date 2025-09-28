@@ -22,7 +22,7 @@ app.use(express.urlencoded({extended:true}))      // extended: true means it can
 connectDatabase();
 
 
-// hey server, malai public folder to kura haru access garn de (asking permission for access to public folder)
+// hey server, malai public folder ko kura haru access garn de (asking permission for access to public folder)
 app.use(express.static("public"))
 
 
@@ -86,12 +86,12 @@ app.get("/blogs/:id", async (req, res) => {
 
   const blog = await Blog.findById(id)
   if(!blog){
-    res.status(200).json({
-      message: "Blog found"
+    res.status(400).json({
+      message: "Blog not found"
     })
   } else {
-    res.status(400).json({
-      message: "Blog not found",
+    res.status(200).json({
+      message: "Blog found",
       data: blog,
     })
   }
@@ -128,8 +128,56 @@ const {title, subTitle, description} = req.body            //frontend bt aako da
 
 
 
+// UPDATE blog api -> patch
+app.patch("/blogs/:id", async (req, res) => {
+  const id = req.params.id; //req ma aako url bata id extract garera id variable ma hal
+  const title = req.body.title; // req  ma aako title lai title variable ma hal
+  const subTitle = req.body.subTitle; // req  ma aako subTitle lai subTitle variable ma hal
+  const descripiton = req.body.descripiton; // req  ma aako description lai description variable ma hal
+
+// const {title, subTitle, description} = req.body       //alternative by object destructuing
+
+
+//check if the blog with id exist or not
+const isBlogFound = await Blog.find({
+  id : id                                          //i.e.   requested id === db id  checking
+})
+ if(isBlogFound.length = 0){
+  res.json({
+    message: "No blog found with that id"
+  })
+ } else{
+
+  await Blog.findByIdAndUpdate(id, {          //Blog model , particular 'id' ko blog find gar ani {...} yo data tya update gar 
+    title: title,
+    subTitle: subTitle,
+    description: descripiton,
+  });
+  res.send({
+    message: "updated successfully"
+  })
+}
+});
+
+
+
+//DELETE api
+app.delete('/blogs/:id', async (req,res) => {
+  const id = req.params.id
+//or 
+// const {id} = req.params
+
+await Blog.findByIdAndDelete(id)
+
+res.status(200).json({
+  message: "blog deleted successfully"
+})
+
+})
+
+
 
 //start server
-app.listen(5000, () => {
-  console.log("Server / NodeJs is running at port 5000");
+app.listen(2000, () => {
+  console.log("Server / NodeJs is running at port 2000");
 });

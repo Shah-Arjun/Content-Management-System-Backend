@@ -3,6 +3,9 @@ const { connectDatabase } = require("./database/database");
 const Blog = require('./model/blogModel')
 const express = require("express");
 const app = express();
+const cors = require('cors')
+
+app.use(cors({origin:"http://localhost:5173"}))
 
 
 
@@ -58,7 +61,7 @@ app.get("/blogs", async (req, res) => {
     res.json({
       status: 200,
       message: "fetched all blogs ",
-      blogsData: blogs, //blogs variable ko blogsData haru data variable ma hal
+      blogs: blogs, //blogs variable ko blogsData haru data variable ma hal
     });
   }
 });
@@ -115,8 +118,8 @@ const {title, subTitle, description} = req.body            //frontend bt aako da
     description: description     // description lai db ko description column ma hal
   });
 
-  res.json({
-    status: 200,
+  res.status(201).json({
+    status: 201,
     message: "Blog created successfully.",
   });
 
@@ -133,7 +136,7 @@ app.patch("/blogs/:id", async (req, res) => {
   const id = req.params.id; //req ma aako url bata id extract garera id variable ma hal
   const title = req.body.title; // req  ma aako title lai title variable ma hal
   const subTitle = req.body.subTitle; // req  ma aako subTitle lai subTitle variable ma hal
-  const descripiton = req.body.descripiton; // req  ma aako description lai description variable ma hal
+  const description = req.body.description; // req  ma aako description lai description variable ma hal
 
 // const {title, subTitle, description} = req.body       //alternative by object destructuing
 
@@ -151,9 +154,9 @@ const isBlogFound = await Blog.find({
   await Blog.findByIdAndUpdate(id, {          //Blog model , particular 'id' ko blog find gar ani {...} yo data tya update gar 
     title: title,
     subTitle: subTitle,
-    description: descripiton,
+    description: description,
   });
-  res.send({
+  res.status(200).send({
     message: "updated successfully"
   })
 }
